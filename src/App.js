@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Section from './Section/Section.jsx';
 import Statistics from './Statistics/Statistics.jsx';
 import CreatefeedbackButton from './CreateFeedbackButton/CreateFeedbackButton.jsx';
@@ -8,10 +8,12 @@ const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
+  const state = { good, neutral, bad };
+
   const handleClickButton = event => {
     const name = event.target.name;
-    console.log(event.target);
-    console.log(name);
+    // console.log(event.target);
+    // console.log(name);
     switch (name) {
       case 'good':
         setGood(state => state + 1);
@@ -36,19 +38,15 @@ const App = () => {
     return Math.floor((good / countTotalFeedback()) * 100);
   };
 
-  // useEffect(() => {
-  //   const countTotalFeedback = () => {
-  //     return good + neutral + bad;
-  //   };
-  // }, [good, neutral, bad]);
+  const getOptions = state => {
+    return Object.keys(state);
+  };
 
   return (
     <>
       <Section title="Please Leave Feedback">
         <CreatefeedbackButton
-          good="good"
-          neutral="neutral"
-          bad="bad"
+          options={getOptions(state)}
           clickButtonFeedback={handleClickButton}
         />
       </Section>
